@@ -13,8 +13,7 @@ This is ROS publisher/subscriber beginner tutorials. Where a publisher named tal
 # Dependencies
 Ubuntu 18.04
 
-ROS Melodic
- 
+ROS Melodic 
 
 
 # Build
@@ -58,13 +57,52 @@ cd ~/catkin_ws/
 source ./devel/setup.bash
 rosrun rqt_graph rqt_graph
 ```
-## 5. Run cppcheck
+## Run code using launch file
+## 1. Run roslaunch
+```
+cd ~/catkin_ws
+source devel/setup.bash
+catkin_make
+roslaunch beginner_tutorials begin_tutorials.launch
+```
+## 2. Run roslaunch with arguments
+```
+roslaunch beginner_tutorials talker_listener.launch freq:=<publish_rate>
+```
+## Example:
+```
+roslaunch beginner_tutorials talker_listener.launch freq:=10
+```
+
+# ROS Service
+While the nodes are running, open a new terminal and run
+```
+cd catkin_ws
+source devel/setup.bash
+rosservice call /change_string "input_string: <String of your choice>"
+```
+# Get RQT Console
+## Install RQT packages
+```
+sudo apt-get install ros-melodic-rqt ros-meldoic-rqt-common-plugins
+```
+
+## Display outputs from nodes
+```
+rosrun rqt_console rqt_console
+```
+## Change the verbosity level of nodes
+```
+rosrun rqt_logger_level rqt_logger_level
+```
+
+# Run cppcheck
 Results are stored in `./results/cppcheck.txt` 
 ```
 cppcheck --enable=all --std=c++11 --suppress=missingIncludeSystem $( find . -name *.cpp | grep -vE -e "^./build/" -e "^./vendor/" -e "^./lib") > results/cppcheck.txt 2>&1
 ```
 
-## 6. Run cpplint
+# Run cpplint
 Results are stored in `./results/cpplint.txt`
 ```
 cpplint $( find . -name \*.hpp -or -name \*.cpp | grep -vE -e "^./build/" -e "^./vendor/" -e "^./docs/" -e "^./results" -e "^./lib/") > results/cpplint.txt 2>&1
