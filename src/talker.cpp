@@ -59,8 +59,8 @@ int main(int argc, char **argv) {
    */
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
   ros::ServiceServer service = n.advertiseService("change_string", change);
-
-  ros::Rate loop_rate(10);
+  int freq = atoi(argv[1]);
+  ros::Rate loop_rate(freq);
 
   /**
    * A count of how many messages we have sent. This is used to create
@@ -68,6 +68,7 @@ int main(int argc, char **argv) {
    */
   int count = 0;
   while (ros::ok()) {
+    ROS_DEBUG_STREAM("Publishing frequency provided- " << freq);
 
     /**
      * This is a message object. You stuff it with data, and then publish it.
@@ -75,17 +76,11 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << str << " " << count;
+    ss << str;
     msg.data = ss.str();
 
-    ROS_INFO("%s", msg.data.c_str());
-
-    // Adding all five Logging Levels
+    // Adding all the Logging Levels
     for (int i = 1; ros::ok(); i ++) {
-      ROS_DEBUG_STREAM("Count begin");
-      if ((i % 2) == 0) {
-        ROS_INFO_STREAM(i << " Stats are even ");
-      }
       if ((i % 10) == 0) {
         ROS_WARN_STREAM(i << " Stats enclosing for each deste");
       }
@@ -103,7 +98,7 @@ int main(int argc, char **argv) {
      * in the constructor above.
      */
 
-    ROS_INFO("%s", msg.data.c_str());
+    ROS_INFO_STREAM(msg.data.c_str() << " " << count);
 
     chatter_pub.publish(msg);
 
