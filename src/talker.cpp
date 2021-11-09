@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
    */
   int count = 0;
   while (ros::ok()) {
-    
+
     /**
      * This is a message object. You stuff it with data, and then publish it.
      */
@@ -80,12 +80,31 @@ int main(int argc, char **argv) {
 
     ROS_INFO("%s", msg.data.c_str());
 
+    // Adding all five Logging Levels
+    for (int i = 1; ros::ok(); i ++) {
+      ROS_DEBUG_STREAM("Count begin");
+      if ((i % 2) == 0) {
+        ROS_INFO_STREAM(i << " Stats are even ");
+      }
+      if ((i % 10) == 0) {
+        ROS_WARN_STREAM(i << " Stats enclosing for each deste");
+      }
+      if ((i % 12) == 0) {
+        ROS_ERROR_STREAM(i << " Stats enclosing for each dozen");
+      }
+      if ((i % 30) == 0) {
+        ROS_FATAL_STREAM(i << " Stats enclosing for each dozen");
+      }
+
     /**
      * The publish() function is how you send messages. The parameter
      * is the message object. The type of this object must agree with the type
      * given as a template parameter to the advertise<>() call, as was done
      * in the constructor above.
      */
+
+    ROS_INFO("%s", msg.data.c_str());
+
     chatter_pub.publish(msg);
 
     ros::spinOnce();
@@ -94,6 +113,6 @@ int main(int argc, char **argv) {
     ++count;
   }
 
-
+  }
   return 0;
 }
