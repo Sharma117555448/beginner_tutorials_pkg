@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="2.0"?>
 <package format="2">
   <name>beginner_tutorials</name>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
   <description>The beginner_tutorials package</description>
 
   <maintainer email="charu107@umd.edu">Charu Sharma</maintainer>
