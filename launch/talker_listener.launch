@@ -13,5 +13,10 @@
         output="screen"
         args = "$(arg freq)"/>
 
+  <node name="service_node"
+	pkg="srv"
+	type="change_string"
+	args="call --wait /change_string" />
+
 </launch>
 

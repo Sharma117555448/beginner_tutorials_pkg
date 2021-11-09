@@ -29,9 +29,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 #include <ros/ros.h>
 #include <std_msgs/String.h>
-#include "beginner_tutorials/change_string.h"
-
 #include <sstream>
+#include "beginner_tutorials/change_string.h"
 
 // Initializing the string
 extern std::string str = "ENPM808X";
@@ -92,7 +91,7 @@ int main(int argc, char **argv) {
    * buffer up before throwing some away.
    */
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
-  
+
     /**
  * @brief ROS Service
  * @param change_string service call 
@@ -146,7 +145,6 @@ int main(int argc, char **argv) {
     loop_rate.sleep();
     ++count;
   }
-
   }
   return 0;
 }
