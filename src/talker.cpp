@@ -2,12 +2,24 @@
 
 #include <ros/ros.h>
 #include <std_msgs/String.h>
+#include "beginner_tutorials/change_string.h"
 
 #include <sstream>
+
+extern std::string str = "ENPM808X";
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
  */
+
+bool change(beginner_tutorials::change_string::Request &req,
+            beginner_tutorials::change_string::Response &res) {
+  // Changing the string
+  res.output_string = req.input_string;
+  str = res.output_string;
+  return true;
+}
+
 int main(int argc, char **argv) {
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
@@ -46,7 +58,8 @@ int main(int argc, char **argv) {
    * buffer up before throwing some away.
    */
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
-
+  ros::ServiceServer service = n.advertiseService("change_string", change);
+  // int freq = atoi(argv[1]);
   ros::Rate loop_rate(10);
 
   /**
@@ -55,13 +68,15 @@ int main(int argc, char **argv) {
    */
   int count = 0;
   while (ros::ok()) {
+    // ROS_DEBUG_STREAM("Publishing frequency provided- " << freq);
+
     /**
      * This is a message object. You stuff it with data, and then publish it.
      */
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << "Counting up: " << count;
+    ss << str << " " << count;
     msg.data = ss.str();
 
     ROS_INFO("%s", msg.data.c_str());

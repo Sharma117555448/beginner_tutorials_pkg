@@ -55,13 +55,11 @@ find_package(catkin REQUIRED COMPONENTS
 #   Num.msg
 # )
 
-# ## Generate services in the 'srv' folder
-# add_service_files(DIRECTORY
-#   DIRECTORY
-#   srv
-#   FILES
-#   AddTwoInts.srv
-# )
+## Generate services in the 'srv' folder
+add_service_files(
+  FILES
+  change_string.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -71,10 +69,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -108,7 +106,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES beginner_tutorials
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+  CATKIN_DEPENDS message_runtime
 #  DEPENDS system_lib
 )
 
@@ -119,7 +117,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -155,11 +153,11 @@ include_directories(
 
 add_executable(talker src/talker.cpp)
 target_link_libraries(talker ${catkin_LIBRARIES})
-# add_dependencies(talker beginner_tutorials_generate_messages_cpp)
+add_dependencies(talker beginner_tutorials_generate_messages_cpp)
 
 add_executable(listener src/listener.cpp)
 target_link_libraries(listener ${catkin_LIBRARIES})
-# add_dependencies(listener beginner_tutorials_generate_messages_cpp)
+add_dependencies(listener beginner_tutorials_generate_messages_cpp)
 
 #############
 ## Install ##
