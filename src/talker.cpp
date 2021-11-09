@@ -1,17 +1,32 @@
 // Copyright (c) 2021 Charu Sharma
 
+/**
+ * @file talker.cpp
+ * @author Charu Sharma (charu107@umd.edu)
+ * @brief ROS Publisher to publish messages to a topic
+ * @version 0.2
+ * @date 2021-11-08
+ */
+
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include "beginner_tutorials/change_string.h"
 
 #include <sstream>
 
+// Initializing the string
 extern std::string str = "ENPM808X";
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
  */
 
+/**
+ * @brief ROS Service to change the string
+ * @param req Service Request 
+ * @param res Service Response
+ * @return true
+ */
 bool change(beginner_tutorials::change_string::Request &req,
             beginner_tutorials::change_string::Response &res) {
   // Changing the string
@@ -58,6 +73,11 @@ int main(int argc, char **argv) {
    * buffer up before throwing some away.
    */
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+  
+    /**
+ * @brief ROS Service
+ * @param change_string service call 
+ */
   ros::ServiceServer service = n.advertiseService("change_string", change);
   int freq = atoi(argv[1]);
   ros::Rate loop_rate(freq);

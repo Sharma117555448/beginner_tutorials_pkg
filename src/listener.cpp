@@ -1,5 +1,13 @@
 // Copyright (c) 2021 Charu Sharma
 
+/**
+ * @file listener.cpp
+ * @author Charu Sharma (charu107@umd.edu)
+ * @brief ROS Subscriber to listen to a topic
+ * @version 0.
+ * @date 2021-11-08
+ */
+
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 
