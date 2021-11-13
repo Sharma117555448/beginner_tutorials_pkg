@@ -82,16 +82,16 @@ source devel/setup.bash
 rosservice call /change_string "input_string: <String of your choice>"
 ```
 # Get RQT Console
-## Install RQT packages
+## 1. Install RQT packages
 ```
 sudo apt-get install ros-melodic-rqt ros-meldoic-rqt-common-plugins
 ```
 
-## Display outputs from nodes
+## 2. Display outputs from nodes
 ```
 rosrun rqt_console rqt_console
 ```
-## Change the verbosity level of nodes
+## 3. Change the verbosity level of nodes
 ```
 rosrun rqt_logger_level rqt_logger_level
 ```
