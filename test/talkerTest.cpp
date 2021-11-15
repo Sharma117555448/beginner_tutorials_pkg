@@ -26,12 +26,12 @@ OTHER DEALINGS IN THE SOFTWARE.
  * @version 0.2
  * @date 2021-11-15
  */
-
-#include "beginner_tutorials/change_string.h"
-#include "std_msgs/String.h"
 #include <gtest/gtest.h>
 #include <ros/ros.h>
 #include <ros/service_client.h>
+#include "beginner_tutorials/change_string.h"
+#include "std_msgs/String.h"
+
 
 /**
  * @brief test existance of service
@@ -60,7 +60,6 @@ TEST(testTalkerNode, test_change_string) {
   srv.request.input_string = "testString";
   client.call(srv.request, srv.response);
   EXPECT_STREQ(srv.response.output_string.c_str(), "testString");
-
 }
 
 int main(int argc, char** argv) {
