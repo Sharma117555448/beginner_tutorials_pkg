@@ -15,6 +15,8 @@ Ubuntu 18.04
 
 ROS Melodic 
 
+Modern C++ Programming Language
+
 
 # Build
 ## Steps to build
@@ -57,6 +59,13 @@ cd ~/catkin_ws/
 source ./devel/setup.bash
 rosrun rqt_graph rqt_graph
 ```
+## 5. Run talkerTest node
+To run the test scirpts
+```
+cd ~/catkin_ws/
+source ./devel/setup.bash
+rosrun beginner_tutorials talkerTest
+```
 ## Run code using launch file
 ## 1. Run roslaunch
 ```
@@ -72,6 +81,11 @@ roslaunch beginner_tutorials talker_listener.launch freq:=<publish_rate>
 ## Example:
 ```
 roslaunch beginner_tutorials talker_listener.launch freq:=10
+
+```
+## 3. Run roslaunch for test
+```
+roslaunch beginner_tutorials talkerTest
 ```
 
 # ROS Service
@@ -94,6 +108,61 @@ rosrun rqt_console rqt_console
 ## 3. Change the verbosity level of nodes
 ```
 rosrun rqt_logger_level rqt_logger_level
+```
+
+# ROS broadcast a TF frame
+Modifing talker node to broadcast a tf frame called /talk with /parent. The transform should have non-zero translation and rotation.
+```
+rosrun tf tf_echo /parent_frame /talk_frame
+```
+To display the RQT_TF_tree
+```
+rosrun rqt_tf_tree rqt_tf_tree
+```
+To generate the tf frames in pdf
+```
+rosrun tf view_frames
+```
+To display the tf frames
+```
+evince frames.pdf
+```
+
+# Launch Rosbag and Record the topics
+## 1. to record Rosbag
+In one terminal run
+```
+roscore
+```
+To record the published data. Open a new terminal window. 
+```
+mkdir ~/bagfiles
+cd ~/bagfiles
+rosbag record -a
+```
+## 2. To examine the rosbag
+```
+cd results
+rosbag info rosbag.bag
+```
+## 3. To play the rosbag
+```
+cd results 
+rosbag play rosbag.bag
+```
+# Run the Listener node ONLY 
+Run listener node in one terminal
+```
+cd ~/catkin_ws/
+source devel/setup.bash
+rosrun beginner_tutorials listener
+```
+In another terminal use rosbag play to replay the topic messages
+```
+cd ~/catkin_ws/
+source devel/setup.bash
+cd src/beginner_tutorials_pkg/results
+rosbag play rosbag.bag
 ```
 
 # Run cppcheck
