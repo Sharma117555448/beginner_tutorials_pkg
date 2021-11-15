@@ -24,13 +24,20 @@ OTHER DEALINGS IN THE SOFTWARE.
  * @author Charu Sharma (charu107@umd.edu)
  * @brief ROS Publisher to publish messages to a topic
  * @version 0.2
- * @date 2021-11-08
+ * @date 2021-11-15
  */
+
+// TF Transform Library
+#include <tf/transform_broadcaster.h>
+
+// ROS Console
+#include <ros/console.h>
 
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <sstream>
 #include "beginner_tutorials/change_string.h"
+
 
 // Initializing the string
 extern std::string str = "ENPM808X";
@@ -73,6 +80,10 @@ int main(int argc, char **argv) {
    */
   ros::NodeHandle n;
 
+  // Create transform broadcast object
+  static tf::TransformBroadcaster br;
+  tf::Transform transform;
+
   /**
    * The advertise() function is how you tell ROS that you want to
    * publish on a given topic name. This invokes a call to the ROS
@@ -97,8 +108,9 @@ int main(int argc, char **argv) {
  * @param change_string service call 
  */
   ros::ServiceServer service = n.advertiseService("change_string", change);
-  int freq = atoi(argv[1]);
-  ros::Rate loop_rate(freq);
+  // int freq = atoi(argv[1]);
+  // ros::Rate loop_rate(freq);
+  ros::Rate loop_rate(10);
 
   /**
    * A count of how many messages we have sent. This is used to create
@@ -106,7 +118,7 @@ int main(int argc, char **argv) {
    */
   int count = 0;
   while (ros::ok()) {
-    ROS_DEBUG_STREAM("Publishing frequency provided- " << freq);
+    // ROS_DEBUG_STREAM("Publishing frequency provided- " << freq);
 
     /**
      * This is a message object. You stuff it with data, and then publish it.
@@ -118,16 +130,16 @@ int main(int argc, char **argv) {
     msg.data = ss.str();
 
     // Adding all the Logging Levels
-    for (int i = 1; ros::ok(); i ++) {
-      if ((i % 10) == 0) {
-        ROS_WARN_STREAM(i << " Stats enclosing for each deste");
-      }
-      if ((i % 12) == 0) {
-        ROS_ERROR_STREAM(i << " Stats enclosing for each dozen");
-      }
-      if ((i % 30) == 0) {
-        ROS_FATAL_STREAM(i << " Stats enclosing for each dozen");
-      }
+    // for (int i = 1; ros::ok(); i ++) {
+    //   if ((i % 10) == 0) {
+    //     ROS_WARN_STREAM(i << " Stats enclosing for each deste");
+    //   }
+    //   if ((i % 12) == 0) {
+    //     ROS_ERROR_STREAM(i << " Stats enclosing for each dozen");
+    //   }
+    //   if ((i % 30) == 0) {
+    //     ROS_FATAL_STREAM(i << " Stats enclosing for each dozen");
+    //   }
 
     /**
      * The publish() function is how you send messages. The parameter
@@ -140,11 +152,20 @@ int main(int argc, char **argv) {
 
     chatter_pub.publish(msg);
 
+    // Set translation and rotation for the transform broadcast
+    transform.setOrigin(tf::Vector3(sin(ros::Time::now().toSec()),
+                                    cos(ros::Time::now().toSec()), 0.0));
+    tf::Quaternion q;
+    q.setRPY(0, 0, 1.0);
+    transform.setRotation(q);
+
+    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(),
+                                          "parent_frame", "talk_frame"));
+
     ros::spinOnce();
 
     loop_rate.sleep();
     ++count;
-  }
   }
   return 0;
 }
