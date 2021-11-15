@@ -103,7 +103,7 @@ int main(int argc, char **argv) {
    */
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
-    /**
+ /**
  * @brief ROS Service
  * @param change_string service call 
  */
@@ -152,6 +152,11 @@ int main(int argc, char **argv) {
 
     chatter_pub.publish(msg);
 
+  /**
+   * @brief to broadcase TF frames
+   * 
+   */
+
     // Set translation and rotation for the transform broadcast
     transform.setOrigin(tf::Vector3(sin(ros::Time::now().toSec()),
                                     cos(ros::Time::now().toSec()), 0.0));
@@ -159,6 +164,8 @@ int main(int argc, char **argv) {
     q.setRPY(0, 0, 1.0);
     transform.setRotation(q);
 
+    // Broadcast the transform at current time with parent frame and
+    // talk as child frame
     br.sendTransform(tf::StampedTransform(transform, ros::Time::now(),
                                           "parent_frame", "talk_frame"));
 
