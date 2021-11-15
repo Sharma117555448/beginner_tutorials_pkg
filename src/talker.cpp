@@ -108,9 +108,9 @@ int main(int argc, char **argv) {
  * @param change_string service call 
  */
   ros::ServiceServer service = n.advertiseService("change_string", change);
-  // int freq = atoi(argv[1]);
-  // ros::Rate loop_rate(freq);
-  ros::Rate loop_rate(10);
+  int freq = atoi(argv[1]);
+  ros::Rate loop_rate(freq);
+  // ros::Rate loop_rate(10);
 
   /**
    * A count of how many messages we have sent. This is used to create
@@ -118,7 +118,7 @@ int main(int argc, char **argv) {
    */
   int count = 0;
   while (ros::ok()) {
-    // ROS_DEBUG_STREAM("Publishing frequency provided- " << freq);
+    ROS_DEBUG_STREAM("Publishing frequency provided- " << freq);
 
     /**
      * This is a message object. You stuff it with data, and then publish it.

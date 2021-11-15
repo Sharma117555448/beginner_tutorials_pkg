@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+<node
+    name="talker_node" 
+    pkg="beginner_tutorials" 
+    type="talker" />
+
+  <test test-name="talkerTest"
+    pkg="beginner_tutorials"  
+    type="talkerTest" />
+
+</launch>

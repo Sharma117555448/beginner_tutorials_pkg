@@ -3,15 +3,15 @@
   <arg name = "freq" default = '2' />
 
   <node name="listener_node" 
-        pkg="beginner_tutorials" 
-        type="listener" 
-        output="screen"/>
+      pkg="beginner_tutorials" 
+      type="listener" 
+      output="screen"/>
 
   <node name="talker_node" 
-        pkg="beginner_tutorials" 
-        type="talker" 
-        output="screen"
-        args = "$(arg freq)"/>
+      pkg="beginner_tutorials" 
+      type="talker" 
+      output="screen"
+      args = "$(arg freq)"/>
 
   <node name="service_node"
 	pkg="srv"
