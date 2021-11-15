@@ -217,7 +217,7 @@ if(CATKIN_ENABLE_TESTING)
   find_package(rostest REQUIRED)
   add_rostest_gtest(
   talkerTest
-#  test/talkerTest.launch
+  # launch/test.launch
   test/main.cpp
   test/talkerTest.cpp
   )
