@@ -1,6 +1,9 @@
 <launch>
 
   <arg name = "freq" default = '2' />
+  <arg name="rosBagEnable" 
+      default="false" 
+      doc="rosBagEnable"/>
 
   <node name="listener_node" 
       pkg="beginner_tutorials" 
@@ -17,6 +20,12 @@
 	pkg="srv"
 	type="change_string"
 	args="call --wait /change_string" />
+
+  <node name="record_talker"
+      pkg="rosbag"
+      type="record"
+      args="-a -O $(find beginner_tutorials)/results/rosbag"
+      if="$(arg rosBagEnable)" />
 
 </launch>
 
